@@ -72,6 +72,9 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     y=m.addVars(range(1,n+2), vtype=GRB.CONTINUOUS, name='y',lb=0) #seconds from start to item i during sweep
     t=m.addVars(range(1,n+1), range(2,n+2), vtype=GRB.CONTINUOUS, name='t',lb=0) # seconds from start to item j if node j comes after node i
 
+    w=m.addVars(range(1,n+2), vtype=GRB.CONTINUOUS, name='w',lb=0) # price from start to item i during sweep
+    p=m.addVars(range(1,n+1), range(2,n+2), vtype=GRB.CONTINUOUS, name='p',lb=0) # price from start to item j if node j comes after node i
+
     m.addConstr(y[1]==0) # starts with node 1  and time 0
     m.addConstrs(x[i,i]==0 for i in range(2,n+1)) # nodes cannot connect to themselves
     m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])<=1 for j in range(2,n+2)) # all nodes follow 0 or 1 node
@@ -84,13 +87,22 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     m.addConstr(quicksum([x[1, j] for j in range(2, n+2)]) == 1) # node 1 must be visited
     m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= cart_cap + 1) #at most 15 items in the cart (not including the end node)
 
+    m.addConstr(w[1]==0) # starts with node 1  and price 0
+    m.addConstrs(p[i,j]<=sum(v)*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # if node i doesn't go to node j, then p[i, j] is 0
+    m.addConstrs(w[j]==quicksum([p[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # w[j] is equal to the only positive p[i, j]
+    m.addConstrs(quicksum([p[j,k] for k in range(2,n+2)])==w[j]+quicksum([v[k-1]*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines p[i, j] to be the price up to the i plus the price of j
+
+
     # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last
     # m.addConstrs(y[n+1] >= y[i] for i in range(1, n+1)) #node n+1 must come last
 
 
     # m.setObjective(y[n+1],GRB.MINIMIZE) # minimize time to the last node
     # m.setObjective(quicksum([quicksum([d[i-1][j-1] * x[i, j] for j in range(2, n+2)]) for i in range(1, n+1)]),GRB.MINIMIZE) # same as previous
-    m.setObjective(quicksum([v[i]*quicksum([x[i,j] for j in range(2,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
+
+
+    # m.setObjective(quicksum([v[i]*quicksum([x[i,j] for j in range(2,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
+    m.setObjective(w[n+1],GRB.MAXIMIZE) # minimize time to the last node
 
 
     if not print_output:

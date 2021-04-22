@@ -72,6 +72,7 @@ m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2
 m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([d[j-1][k-1]*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the i plus the time from the i to j
 m.addConstr(y[n+1]<=90) # total time less than 90 seconds
 m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # node n+1 must be visited
+m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= 15) #at most 15 items in the cart
 
 # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last
 # m.addConstrs(y[n+1] >= y[i] for i in range(1, n+1)) #node n+1 must come last
@@ -97,6 +98,7 @@ count = 0
 for i in range(1,n+1):
     for j in range(2,n+2):
         if int(x[i,j].x):
+            print(str(item_list[i])+' -->'+str(j))
             count +=1
             nodedict[i]=j
 

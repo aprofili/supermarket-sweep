@@ -17,7 +17,7 @@ class Item:
         self.y = int(y)
 
     def __repr__(self):
-        return self.name + ": $" + str(self.price) + " at " + str(self.x) + ", " + str(self.y)
+        return f"{self.name}: ${self.price} at ({self.x},{self.y})"
 
 item_list = []
 with open("Supermarket Sweep.csv", "r") as file:
@@ -46,6 +46,10 @@ for i in range(len(d[0])):
     d[i].append(d[i][0])
 pprint(np.array(d))
 
+for i in range(len(d)):
+    for j in range(len(d) - 1):
+        d[i][j] = d[i][j] + 2
+
 from gurobipy import GRB, Model,quicksum
 
 m = Model('Supermarket Sweep')
@@ -70,7 +74,7 @@ m.addConstrs(quicksum([x[i,j] for j in range(2,n+2)])<=1 for i in range(1,n+1)) 
 m.addConstrs(t[i,j]<=maxtime*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # if node i doesn't go to node j, then t[i, j] is 0
 m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # y[j] is equal to the only positive t[i, j]
 m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([d[j-1][k-1]*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the i plus the time from the i to j
-m.addConstr(y[n+1]<=90) # total time less than 90 seconds
+m.addConstr(y[n+1]<=maxtime) # total time less than 90 seconds
 m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # node n+1 must be visited
 m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= 15 + 1) #at most 15 items in the cart (not including the end node)
 
@@ -83,34 +87,29 @@ m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,
 m.setObjective(quicksum([v[i]*quicksum([x[i,j] for j in range(i+1,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
 
 m.optimize()
-#class Node:
-#    def __init__(self, item, next):
-#        self.item=item
-#
-#    def __repr__(self):
-#        return 'item '+ str(self.i) + " comes before item " + str(self.next.item)
 
-print("\nOptimal Value: %s" % (str(m.ObjVal)))
-print("\n\n")
+
+print(f"\n\n\nMoney Won: ${m.ObjVal}")
+print("")
 
 nodedict={}
 count = 0
 for i in range(1,n+1):
     for j in range(2,n+2):
         if int(x[i,j].x):
-            print(str(item_list[i-1])+' -->'+str(j))
             count +=1
             nodedict[i]=j
 
+print("Path Taken:")
 i = 1
-print(i)
 for rep in range(count):
+    print(f"Node {i}: {item_list[i-1]}")
     i = nodedict[i]
-    print(i)
+print("Back to Start (0,0)\nFinished")
 
-# print(count)
+
 time = 0
 for (i, j) in nodedict.items():
     time += d[i-1][j-1]
-# print(time)
+print(f"\nTime used: {time} seconds")
 

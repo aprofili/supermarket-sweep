@@ -44,7 +44,7 @@ for i in range(len(item_list)):
 d.append(d[0])
 for i in range(len(d[0])):
     d[i].append(d[i][0])
-pprint(np.array(d))
+# pprint(np.array(d))
 
 for i in range(len(d)):
     for j in range(len(d) - 1):
@@ -111,5 +111,5 @@ print("Back to Start (0,0)\nFinished")
 time = 0
 for (i, j) in nodedict.items():
     time += d[i-1][j-1]
-print(f"\nTime used: {time} seconds")
+print(f"\nTime used: {time} seconds\n\n\n")
 

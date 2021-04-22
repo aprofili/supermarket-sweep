@@ -136,23 +136,23 @@ for part in parts:
     if part == "c":
         optimize(print_output=True)
     if part == "d":
-        results = []
+        d_results = []
         for max_time in max_times:
-            results.append(optimize(max_time=max_time))
+            d_results.append(optimize(max_time=max_time))
         print("d results")
-        print(results)
+        print(d_results)
     if part == "e":
-        results = []
+        e_results = []
         for cart_cap in cart_caps:
-            results.append(optimize(cart_cap=cart_cap))
+            e_results.append(optimize(cart_cap=cart_cap))
         print("e results")
-        print(results)
+        print(e_results)
     if part == "f":
-        results = []
+        f_results = []
         for mip_gap in mip_gaps:
-            results.append(optimize(mip_gap=(mip_gap/10000)))
+            f_results.append(optimize(mip_gap=(mip_gap/10000)))
         print("f results")
-        print(results)
+        print(f_results)
 
 
 

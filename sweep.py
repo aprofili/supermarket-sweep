@@ -89,13 +89,13 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
 
     # m.setObjective(y[n+1],GRB.MINIMIZE) # minimize time to the last node
     # m.setObjective(quicksum([quicksum([d[i-1][j-1] * x[i, j] for j in range(2, n+2)]) for i in range(1, n+1)]),GRB.MINIMIZE) # same as previous
-    m.setObjective(quicksum([v[j-1]*quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
+    m.setObjective(quicksum([v[i]*quicksum([x[i,j] for j in range(i+1,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
 
 
     if not print_output:
         m.setParam("LogToConsole", 0)
 
-    m.setParam("MIPGap", mip_gap*100)
+    m.setParam("MIPGap", mip_gap)
 
 
     m.optimize()

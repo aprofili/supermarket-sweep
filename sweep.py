@@ -57,7 +57,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     m = Model('Supermarket Sweep')
 
     n= len(item_list)
-    print(n)
+    # print(n)
     v=[i.price for i in item_list]
     v.append(0.0)
     # max_time=90
@@ -91,7 +91,12 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     # m.setObjective(quicksum([quicksum([d[i-1][j-1] * x[i, j] for j in range(2, n+2)]) for i in range(1, n+1)]),GRB.MINIMIZE) # same as previous
     m.setObjective(quicksum([v[i]*quicksum([x[i,j] for j in range(i+1,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
 
+
+    if not print_output:
+        m.setParam("LogToConsole", 0)
+
     m.setParam("MIPGap", mip_gap)
+
 
     m.optimize()
 

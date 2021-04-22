@@ -1,0 +1,18 @@
+---
+title: "Supermarket Sweep"
+author: "Adam Profili, Brynn Schneberger"
+date: "4/25/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# b.
+
+$$
+\begin{aligned}
+\max \sum_{i=1}^nv_i\sum_{j=i+1}^{n+1}
+\end{aligned}
+$$

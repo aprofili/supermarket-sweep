@@ -80,7 +80,7 @@ m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([d[j-1][k-1
 m.addConstr(y[n+1]<=max_time) # total time less than 90 seconds
 m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # node n+1 must be visited
 m.addConstr(quicksum([x[1, j] for j in range(2, n+2)]) == 1) # node 1 must be visited
-m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= cart_cap + 1) #at most 15 items in the cart (not including the end node)
+m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+1)])<= cart_cap) #at most 15 items in the cart (not including the end node)
 
 # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last
 # m.addConstrs(y[n+1] >= y[i] for i in range(1, n+1)) #node n+1 must come last

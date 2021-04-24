@@ -56,7 +56,7 @@ for i in range(len(item_list)):
 #.append(d[0])
 for i in range(len(d[0])):
     d[i].append(max(d[i][0],0))
-# pprint(np.array(d))
+pprint(np.array(d))
 
 #for i in range(len(d)):
 #    for j in range(len(d) - 1):
@@ -145,7 +145,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
 
 
 
-parts = "c"
+parts = ""
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)
@@ -158,8 +158,9 @@ for part in parts:
         d_results = []
         for max_time in max_times:
             d_results.append(optimize(max_time=max_time))
-        for i in range(d_results-1):
-            plt.plot((max_times[i],max_times[i+1]),(d_results[i],d_results[i+1]), marker='o')
+        plt.plot([int(i) for i in max_times],d_results, marker='o')
+        plt.xlabel("Number of seconds allotted to competitors (s)")
+        plt.ylabel("Optimal value ($)")
         plt.show()
         print("d results")
         print(d_results)
@@ -177,4 +178,8 @@ for part in parts:
         print(f_results)
 
 
-
+#d_results=[120,130,150,180,220]
+#plt.plot([int(i) for i in max_times],d_results, marker='o')
+#plt.xlabel("Number of seconds allotted to competitors (s)")
+#plt.ylabel("Optimal value ($)")
+#plt.show()

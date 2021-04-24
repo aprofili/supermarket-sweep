@@ -173,6 +173,7 @@ for part in parts:
         print(d_results)
     if part == "e":
         e_results = []
+        for cart_cap in cart_caps:
             e_results.append(optimize(cart_cap=cart_cap))
         print("e results")
         print(e_results)

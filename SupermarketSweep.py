@@ -120,7 +120,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
                 count +=1
                 nodedict[i]=j
 
-    pprint(nodedict)
+    # pprint(nodedict)
     if print_output:
         print(f"\n\n\nMoney Won: ${m.ObjVal}")
         print("")

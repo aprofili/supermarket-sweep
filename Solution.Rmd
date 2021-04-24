@@ -32,6 +32,13 @@ for i in range(len(item_list)):
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = (dist_x + dist_y) / 10
+
+
+
+
+
+(10)&&y_{n+1}&\le T \\ \\
+
 ```
 Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown.
 ```{r, eval=FALSE}
@@ -57,11 +64,9 @@ $$
 (6)&&\sum_{i=1}^{n}x_{i,n+1}&=1 \\ \\
 (7)&&t_{ij}&\le T x_{ij} &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
 (8)&&y_j &= \sum_{i=1}^n t_{ij} &\forall j=2, 3, ..., n+1 \\ \\
-(9)&&\sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} d_{jk}x_{jk} &\forall j=1, 2, ..., n \\ \\
-(10)&&y_{n+1}&\le T \\ \\
-(11)&&\sum_{i=1}^n\sum_{j=2}^{n}x_{ij} &\le C \\ \\
+(9)&&\sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} (d_{jk}+2)x_{jk} &\forall j=1, 2, ..., n \\ \\
+(10)&&\sum_{i=1}^n\sum_{j=2}^{n}x_{ij} &\le C \\ \\
 &&x_{ij} &\in \{0,1\} &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
 &&t_{ij} &\ge 0 &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
-&&y_{j} &\ge 0 &\forall j = 1, 2, ..., n+1 \\ \\
 \end{aligned}
 $$

@@ -36,9 +36,9 @@ for i in range(len(item_list)):
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = ((dist_x + dist_y) / 10) 
             d[j][i] = ((dist_x + dist_y) / 10) 
-        if i!=j:
-            d[j][i]+=2
-            d[i][j] +=2
+        # if i!=j:
+        #     d[j][i]+=2
+        #     d[i][j] +=2
 #
 #d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
 #for i in range(len(item_list)):
@@ -55,7 +55,7 @@ for i in range(len(item_list)):
 
 #.append(d[0])
 for i in range(len(d[0])):
-    d[i].append(max(d[i][0]-2,0))
+    d[i].append(max(d[i][0],0))
 # pprint(np.array(d))
 
 #for i in range(len(d)):
@@ -81,7 +81,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     # mip_gap = 0.0001
 
     x=m.addVars(range(1,n+1), range(2,n+2), vtype=GRB.BINARY, name='x') #if path from item i to j is in the sweep
-    y=m.addVars(range(1,n+2), vtype=GRB.CONTINUOUS, name='y',lb=0) #seconds from start to item i during sweep
+    y=m.addVars(range(1,n+2), vtype=GRB.CONTINUOUS, name='y') #seconds from start to item i during sweep
     t=m.addVars(range(1,n+1), range(2,n+2), vtype=GRB.CONTINUOUS, name='t',lb=0) # seconds from start to item j if node j comes after node i
 
     m.addConstr(y[1]==0) # starts with node 1  and time 0
@@ -92,7 +92,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # node n+1 must be visited
     m.addConstrs(t[i,j]<=max_time*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # if node i doesn't go to node j, then t[i, j] is 0
     m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # y[j] is equal to the only positive t[i, j]
-    m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([(d[j-1][k-1])*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the ith node plus the time from the ith to jth node
+    m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([(d[j-1][k-1]+2)*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the ith node plus the time from the ith to jth node
     m.addConstr(y[n+1]<=max_time) # total time less than 90 seconds
     m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= cart_cap + 1) #at most 15 items in the cart (not including the end node)
     # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last

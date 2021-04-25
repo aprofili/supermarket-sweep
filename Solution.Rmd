@@ -64,33 +64,34 @@ $T$ represents the maximum time the contestant is given to shop.
 
 $C$ represents the maximum amount of items the contestant can put in their cart.
 
-$v_{i}$ represents the value of node $i$. $\forall i \in [\![1, n]\!]$
+$v_{i}$ represents the value of node $i$. $\forall i = 1, 2, ..., n$
 
-$d_{ij}$ represents the minimum time it takes to move from node $i$ to node $j$. If node $j$ represents an item and not a start/end point, it will include the 2 seconds to add that item to the cart. $\forall i = 1, 2, ..., n$ $\forall j \in [\![2, n+1]\!]$
+$d_{ij}$ represents the minimum time it takes to move from node $i$ to node $j$. If node $j$ represents an item and not a start/end point, it will include the 2 seconds to add that item to the cart. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
 
 ## Decision Variables:
 
-$x_{ij} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i \in [\![1, n]\!]$ $\forall j \in [\![2, n+1]\!]$
+$x_{ij} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
 
-$y_{j}$ represents the running time to follow the path from the start until node $j$. $\forall j \in [\![1, n+1]\!]$
+$y_{j} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall j = 1, 2, ..., n+1$
 
-$t_{ij} = y_{j}$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i \in [\![1, n]\!]$ $\forall j \in [\![2, n+1]\!]$
+$t_{ij} = y_{j}$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
 
 $$
 \begin{aligned}
 &\max_{x, y, t} &\textrm{score}&=\sum_{i=1}^nv_i\sum_{j=2}^{n+1}x_{ij} \\ \\
 \textrm{s.t.}\ \ \ \ \ \ \ \ \ \ \ \ \ (1)&& y_1 &= 0 \\ \\
 (2)&&\sum_{j=2}^{n+1}x_{1,j}&=1 \\ \\
-(3)&&\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i \in [\![2, n]\!] \\ \\
-(4)&&\sum_{i=1}^{n}x_{ij}&\le1 &\forall j \in [\![2, n]\!]\\ \\
+(3)&&\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i=2, 3, ..., n \\ \\
+(4)&&\sum_{i=1}^{n}x_{ij}&\le1 &\forall j=2, 3 ..., n\\ \\
 (5)&&\sum_{i=1}^{n}x_{i,n+1}&=1 \\ \\
-(6)&&t_{ij}&\le T x_{ij} &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!] \\ \\
-(7)&&y_j &= \sum_{i=1}^n t_{ij} &\forall j \in [\![2, n+1]\!] \\ \\
-(8)&&\sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} d_{jk}x_{jk} &\forall j \in [\![1, n]\!] \\ \\
-(9)&&x_{ii} &= 0 &\forall i \in [\![1, n]\!] \\ \\
-(10)&&\sum_{i=1}^{n}x_{ij}&= \sum_{k=2}^{n+1}x_{jk}  &\forall j \in [\![2, n]\!] \\ \\
+(6)&&t_{ij}&\le T x_{ij} &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
+(7)&&y_j &= \sum_{i=1}^n t_{ij} &\forall j=2, 3, ..., n+1 \\ \\
+(8)&&\sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} d_{jk}x_{jk} &\forall j=1, 2, ..., n \\ \\
+(9)&&x_{ii} &= 0 &\forall i = 1, 2, ..., n \\ \\
+(10)&&\sum_{i=1}^{n}x_{ij}&= \sum_{k=2}^{n+1}x_{jk}  &\forall j=2, 3, ..., n \\ \\
 (11)&&\sum_{i=1}^n\sum_{j=2}^{n}x_{ij} &\le C \\ \\
-&&x_{ij} &\in \{0,1\} &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!] \\ \\
+&&x_{ij} &\in \{0,1\} &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
+&&t_{ij} &\ge 0 &\forall i = 1, 2, ..., n \ \ \ \ \ \ &\forall j=2, 3, ..., n+1 \\ \\
 \end{aligned}
 $$
 
@@ -119,9 +120,7 @@ $$
 (11) The amount of item nodes in the path must be less than $C$.
 
 # c.
-
-## Path Taken:
-
+Path Taken:
 Node 1: Start Node (0,0)
 
 Node 2: Coffee Beans: $6.99 at (0,15)
@@ -161,12 +160,14 @@ The total value of the optimized cart is $143.85
 # d.
 
 ```{r, echo=FALSE}
-d_results = c(135.64999999999998, 136.64999999999998, 136.85, 136.85, 138.14999999999998, 138.64999999999998, 139.85, 142.35, 143.64999999999998, 143.64999999999998, 143.85, 144.04999999999998, 144.35, 145.64999999999998, 148.64999999999998, 148.64999999999998, 148.85, 149.64999999999998, 150.35, 150.35, 151.64999999999998)
-times=c(80:100)
+d_results = c(86.42, 94.41999999999999, 101.69999999999999, 112.67999999999999, 119.67999999999996, 128.66999999999996, 135.64999999999998, 138.64999999999998, 143.85, 148.64999999999998, 151.64999999999998, 153.85, 154.85, 154.85, 154.85, 154.85, 154.85)
+times=50+(0:16)*5
 plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
 
 # e.
+
+For this part of the problem we changed the maximum number of items allowed in the contestant's cart, while keeping the time to complete the sweep constant, at 15 seconds. As shown in the graph, the optimal value of the shopping casrt increases until the capacity of the cart is 18. At this point, the optimal value of the items in the cart plateaus and because the contestant does not have the time to go around the store and all of the expensive items. It appeaars that the most they can make during a 90 second interval is $148.82. The function of the optimal value on the number of items allowed in the cart is a concave increasing function. 
 
 ```{r, echo=FALSE}
 e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999998, 118.89999999999998, 125.88999999999997, 132.87999999999997, 138.36999999999998, 140.05999999999997, 143.85, 147.64, 147.82999999999998, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82)
@@ -177,11 +178,7 @@ plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In
 # f.
 
 ```{r, echo=FALSE}
-f_results=c(49.4259250164032,51.06009101867676,48.211241006851196,48.72215414047241,48.386127948760986,48.28911089897156,47.09932589530945,35.00831413269043,8.069560050964355,0.9056010246276855,0.8977799415588379)
-f_results=c(49.04923486709595,48.49178385734558,48.616859912872314,49.12479591369629,52.22806119918823,52.664852142333984,52.3493549823761,52.59743309020996,51.506157875061035,52.76315999031067,47.340734004974365,35.65971803665161,8.650303840637207,1.0945320129394531,1.0121819972991943)
 f_results=c(55.552918910980225,51.73050308227539,49.226829051971436,48.2147171497345,46.99422883987427,40.8342010974884,35.21365284919739,7.805516004562378,0.9036610126495361,0.8991899490356445,0.8945901393890381)
-mipgaps=c(0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01,0.05,0.1,0.5,1)
-mipgaps=c(0.0000001,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01,0.05,0.1,0.5,1)
 mipgaps=c(10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0)
 #mipgaps2=c(-4,)
 plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIP Gap)", ylab="Runtime (seconds)", type='o')

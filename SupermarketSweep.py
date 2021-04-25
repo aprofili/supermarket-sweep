@@ -158,8 +158,8 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
 
 
-parts = "f"
-max_times = range(80, 101, 5)
+parts = "d"
+max_times = range(50, 131, 5)
 cart_caps = range(5, 26)
 mip_gaps = [10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0]
 

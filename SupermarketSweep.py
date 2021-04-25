@@ -158,10 +158,10 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
 
 
-parts = "cf"
+parts = "f"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
-mip_gaps = range(1, 30)
+mip_gaps = [10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0]
 
 
 for part in parts:
@@ -192,9 +192,11 @@ for part in parts:
     if part == "f":
         f_results = []
         for mip_gap in mip_gaps:
-            f_results.append(optimize(mip_gap=(mip_gap/10000), part="f"))
+            op=optimize(mip_gap=(mip_gap), part="f")
+            f_results.append(op)
+            print(op)
         print("\nF GRAPH")
-        plt.plot([int(i) for i in mip_gaps],f_results, marker='o')
+        plt.plot(mip_gaps,f_results, marker='o')
         plt.xlabel("MIP Parameter in Optimization Problem")
         plt.ylabel("Optimal value ($)")
         plt.show()

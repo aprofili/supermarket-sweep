@@ -122,21 +122,37 @@ $$
 # c.
 Path Taken:
 Node 1: Start Node (0,0)
+
 Node 2: Coffee Beans: $6.99 at (0,15)
+
 Node 3: K-Cups: $10.99 at (0,35)
+
 Node 6: Granola: $5.49 at (0,100)
+
 Node 26: Shampoo: $8.99 at (40,100)
+
 Node 31: Trash Bags: $8.99 at (50,95)
+
 Node 36: Air Freshner: $6.99 at (60,75)
+
 Node 35: Dog Treats: $3.99 at (60,65)
+
 Node 34: Broom: $13.99 at (60,35)
+
 Node 33: Detergent: $12.99 at (60,20)
+
 Node 40: Redbull (4): $7.99 at (70,30)
+
 Node 39: Gatorade (12): $6.99 at (70,35)
+
 Node 28: Paper Towels: $9.99 at (50,25)
+
 Node 27: Toilet Paper: $7.99 at (50,15)
+
 Node 22: Ibuprofen: $5.49 at (40,20)
+
 Node 23: Diapers: $25.99 at (40,35)
+
 Back to Start (0,0)
 
 The total value of the optimized cart is $143.85
@@ -156,8 +172,11 @@ plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In
 ```
 # f.
 ```{r, echo=FALSE}
-f_results=c(48.907296895980835, 48.149569034576416, 50.7875018119812, 47.497539043426514, 48.54376697540283, 46.827709913253784, 47.3807110786438, 46.99515891075134, 47.16296696662903, 50.65434694290161, 53.655133962631226)
-mipgaps=c(5:15)
-plot(mipgaps, f_results, col="purple", xlab="MIP Gaps", ylab="Runtime (seconds)", type='o')
+f_results=c(49.4259250164032,51.06009101867676,48.211241006851196,48.72215414047241,48.386127948760986,48.28911089897156,47.09932589530945,35.00831413269043,8.069560050964355,0.9056010246276855,0.8977799415588379)
+f_results=c(49.04923486709595,48.49178385734558,48.616859912872314,49.12479591369629,52.22806119918823,52.664852142333984,52.3493549823761,52.59743309020996,51.506157875061035,52.76315999031067,47.340734004974365,35.65971803665161,8.650303840637207,1.0945320129394531,1.0121819972991943)
+mipgaps=c(0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01,0.05,0.1,0.5,1)
+mipgaps=c(0.0000001,0.0000005,0.000001,0.000005,0.00001,0.00005,0.0001,0.0005,0.001,0.005,0.01,0.05,0.1,0.5,1)
+#mipgaps2=c(-4,)
+plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIP Gaps)", ylab="Runtime (seconds)", type='o')
 ```
 

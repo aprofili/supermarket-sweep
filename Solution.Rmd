@@ -47,7 +47,7 @@ Then, since the end node we create later doesn't have an entry in the list of it
 ```{r, eval=FALSE}
 d.append(d[0])
 for i in range(len(d[0])):
-    if i in [0, len(d[0])]:
+    if i in [0, len(d[0])-1]:
         d[i].append(d[i][0])
     else:
         d[i].append(d[i][0] - 2)

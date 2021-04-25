@@ -183,6 +183,6 @@ plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In
 f_results=c(55.552918910980225,51.73050308227539,49.226829051971436,48.2147171497345,46.99422883987427,40.8342010974884,35.21365284919739,7.805516004562378,0.9036610126495361,0.8991899490356445,0.8945901393890381)
 mipgaps=c(10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0)
 #mipgaps2=c(-4,)
-plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIP Gap)", ylab="Runtime (seconds)", type='o')
+plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIPGap)", ylab="Runtime (seconds)", type='o')
 ```
 

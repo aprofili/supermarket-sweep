@@ -11,9 +11,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Project Overview
 
-<font size="9"> A contestant in a gameshow has a default of 90 seconds to make their way around a grocery store, collect up to a default of 15 items in their cart, and return to the start. Their score is the total cost of the items in their cart. Items are spread around the following aisles, and each have specific prices and locations.</font>
+A contestant in a gameshow has a default of 90 seconds to make their way around a grocery store, collect up to a default of 15 items in their cart, and return to the start.
 
-![Grocery Store Layout](map.png){height=180}
+Their score is the total cost of the items in their cart. Items are spread around the pictured aisles, and each have specific prices and locations.
+
+![Grocery Store Layout](map.png){height=160}
 
 ## (a) asks:
 
@@ -81,53 +83,97 @@ $$
 
 $$
 \begin{aligned}
-\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i=2, 3, ..., n
+\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i \in [\![2, n]\!]
 \end{aligned}
 $$
+
+## (b) Constraint (4)
+
+$$
+\begin{aligned}
+\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i \in [\![2, n]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (3)
+
+$$
+\begin{aligned}
+\sum_{i=1}^{n}x_{ij}&\le1 &\forall j \in [\![2, n]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (5)
+
+$$
+\begin{aligned}
+\sum_{i=1}^{n}x_{i,n+1}&=1
+\end{aligned}
+$$
+
+## (b) Constraint (6)
+
+$$
+\begin{aligned}
+t_{ij}&\le T x_{ij} &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (7)
+
+$$
+\begin{aligned}
+y_j &= \sum_{i=1}^n t_{ij} &\forall j \in [\![2, n+1]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (8)
+
+$$
+\begin{aligned}
+\sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} d_{jk}x_{jk} &\forall j \in [\![1, n]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (9)
+
+$$
+\begin{aligned}
+x_{ii} &= 0 &\forall i \in [\![1, n]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (10)
+
+$$
+\begin{aligned}
+\sum_{i=1}^{n}x_{ij}&= \sum_{k=2}^{n+1}x_{jk}  &\forall j \in [\![2, n]\!]
+\end{aligned}
+$$
+
+## (b) Constraint (11)
+
+$$
+\begin{aligned}
+\sum_{i=1}^n\sum_{j=2}^{n}x_{ij} &\le C
+\end{aligned}
+$$
+
+## (b) Bound Constraints
+
+$$
+\begin{aligned}
+x_{ij} &\in \{0,1\} &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!] \\ \\
+t_{ij} &\ge 0 &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!]
+\end{aligned}
+$$
+
 
 
 ## (c) asks:
 
 Code and solve your optimization model.  What is the optimal path?  Which items are picked?  What is the total value of these items?
 
-## (c) solution:
-
-
-Path Taken:
-
-Node 1: Start Node (0,0)
-
-Node 2: Coffee Beans: $6.99 at (0,15)
-
-Node 3: K-Cups: $10.99 at (0,35)
-
-Node 6: Granola: $5.49 at (0,100)
-
-Node 26: Shampoo: $8.99 at (40,100)
-
-Node 31: Trash Bags: $8.99 at (50,95)
-
-Node 36: Air Freshner: $6.99 at (60,75)
-
-Node 35: Dog Treats: $3.99 at (60,65)
-
-Node 34: Broom: $13.99 at (60,35)
-
-Node 33: Detergent: $12.99 at (60,20)
-
-Node 40: Redbull (4): $7.99 at (70,30)
-
-Node 39: Gatorade (12): $6.99 at (70,35)
-
-Node 28: Paper Towels: $9.99 at (50,25)
-
-Node 27: Toilet Paper: $7.99 at (50,15)
-
-Node 22: Ibuprofen: $5.49 at (40,20)
-
-Node 23: Diapers: $25.99 at (40,35)
-
-Back to Start (0,0)
 
 
 

@@ -9,25 +9,17 @@ output: beamer_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+## Project Overview
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+A contestant in a gameshow has a default of 90 seconds to make their way around a grocery store, collect up to a default of 15 items in their cart, and return to the start. Their score is the total cost of the items in their cart. Items are spread around the following aisles, and each have specific prices and locations.
 
 ## (a) asks:
 
 For each pair of items $i,j\in\{1,2,...,56\}$, compute the shortest time $d_ij$ to go from item $i$ to item $j$, and store these values. You may not use any optimization software to answer this question. Compute also the shortest time to travel between the start/end location and any item.
 
-## Slide with R Output
+## (a) solution:
 
 ```{r cars, echo = TRUE}
 summary(cars)
-```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
 ```
 

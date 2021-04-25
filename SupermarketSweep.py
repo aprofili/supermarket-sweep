@@ -61,7 +61,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
     m.addConstr(y[1]==0) # (1) starts with node 1  and time 0
     m.addConstr(quicksum([x[1, j] for j in range(2, n+2)]) == 1) # (2) node 1 must be visited
     m.addConstrs(quicksum([x[i,j] for j in range(2,n+2)])<=1 for i in range(1,n+1)) # (3) all nodes are followed by 0 or 1 node
-    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])<=1 for j in range(2,n+2)) # (4) all nodes follow 0 or 1 node
+    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])<=1 for j in range(2,n+1)) # (4) all nodes follow 0 or 1 node
     m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # (5) node n+1 must be visited
     m.addConstrs(t[i,j]<=max_time*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # (6) if node i doesn't go to node j, then t[i, j] is 0
     m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # (7) y[j] is equal to the only positive t[i, j]

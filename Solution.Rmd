@@ -33,7 +33,7 @@ for i in range(len(item_list)):
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = (dist_x + dist_y) / 10
-        # add 2 seconds to the time bewteen items if the time is not already 0. this creates an extra
+        # add 2 seconds to the time between items if the time is not already 0. this creates an extra
         # two seconds for the contestant to pick up the item
         if i!=j:
             d[j][i]+=2
@@ -43,7 +43,7 @@ for i in range(len(item_list)):
 
 (10)&&y_{n+1}&\le T \\ \\
 ```
-Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. We must subtract two seconds from this time because the matrix values compute the time it takes to go from node i to node j plus the time spent at node j, 2 seconds. Since this is a value of time, it should stay non-negative so we have added a maxmimum function.
+Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. We must subtract two seconds from this time because the matrix values compute the time it takes to go from node i to node j plus the time spent at node j, 2 seconds. Since this is a value of time, it should stay non-negative so we have added a maximum function.
 ```{r, eval=FALSE}
 d.append(d[0])
 for i in range(len(d[0])):
@@ -110,8 +110,19 @@ $$
 
 # d.
 
-```{r}
+```{r,echo=FALSE}
 d_results = c(135.64999999999998, 136.64999999999998, 136.85, 136.85, 138.14999999999998, 138.64999999999998, 139.85, 142.35, 143.64999999999998, 143.64999999999998, 143.85, 144.04999999999998, 144.35, 145.64999999999998, 148.64999999999998, 148.64999999999998, 148.85, 149.64999999999998, 150.35, 150.35, 151.64999999999998)
-
+times=c(80:100)
+plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (s)", ylab="Optimal value ($)", type='o')
+```
+```{r, echo=FALSE}
+e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999998, 118.89999999999998, 125.88999999999997, 132.87999999999997, 138.36999999999998, 140.05999999999997, 143.85, 147.64, 147.82999999999998, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82)
+capacities=c(5:25)
+plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
+```
+```{r}
+f_results=c(48.907296895980835, 48.149569034576416, 50.7875018119812, 47.497539043426514, 48.54376697540283, 46.827709913253784, 47.3807110786438, 46.99515891075134, 47.16296696662903, 50.65434694290161, 53.655133962631226)
+mipgaps=c(5:15)
+plot(mipgaps, f_results, col="purple", xlab="MIP Gaps", ylab="Optimal value ($)", type='o')
 ```
 

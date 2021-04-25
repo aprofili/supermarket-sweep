@@ -37,8 +37,7 @@ for i in range(len(item_list)):
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = (dist_x + dist_y) / 10
-        # add 2 seconds to the time between items if the time is not already 0. this creates an extra
-        # two seconds for the contestant to pick up the item
+        # add the extra time to pick up node j 
         if i!=j:
             d[j][i]+=2
             d[i][j] +=2

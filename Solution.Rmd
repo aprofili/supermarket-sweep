@@ -106,6 +106,13 @@ $$
 
 (7) Each running time $y_j$ is set as the sum over all $i$ of $t_ij$ for all destination nodes $j$, of which at most one is nonzero.
 
+(8) We define the sum over destination nodes $k$ of $t_jk$ as the sum of the running total at node $j$ plus the additional time added by the chosen destination.
+
+(9) No node may follow itself in the path.
+
+(10) Nodes that are not entered may not be exited, and nodes that are entered must be exited.
+
+(11) The amount of item nodes in the path must be less than $C$.
 
 
 # d.

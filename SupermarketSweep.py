@@ -57,8 +57,12 @@ for i in range(len(item_list)):
 d.append(d[0])                       #keep
 #for i in range(len(d[0])):         #adam
 #    d[i].append(d[i][0])           #adam
-for i in range(len(d[0])):          #brynn
-    d[i].append(max(d[i][0]-2,0))   #brynn
+d.append(d[0])
+for i in range(len(d[0])):
+    if i in [0, len(d[0])]:
+        d[i].append(d[i][0])
+    else:
+        d[i].append(d[i][0] - 2)
 
 #for i in range(len(d)):            #adam
 #    for j in range(len(d) - 1):    #adam

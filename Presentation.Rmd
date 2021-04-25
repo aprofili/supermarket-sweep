@@ -174,9 +174,9 @@ $$
 
 Code and solve your optimization model.  What is the optimal path?  Which items are picked?  What is the total value of these items?
 
+## (c) solution:
 
-
-
+Refer to code output
 
 ## (d) asks:
 
@@ -204,3 +204,5 @@ How does the optimal value of the problem vary with respect to the capacity of t
 ## (f) asks:
 
 Consider the initial parameters of the problem (cart of size 15, time allowed of 90 seconds). Gurobi  has  a  parameter  called  MIPGap. Its  default  value  is  0.0001. This  means that Gurobi will output a solution, as soon as its objective value is within 0.01% of the optimal value of the problem. Changing  this parameter will influence the time it takes Gurobi to output a solution.  What happens if you change this Gurobi parameter for the Supermarket Sweep  problem?   Answer  this  question  by  plotting  and  analyzing  the  time  Gurobi  takes  to output  a  solution  with  respect  to  the  optimality  gap  that  is  allowed.
+
+## (f) solution:

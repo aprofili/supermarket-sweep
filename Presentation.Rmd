@@ -15,11 +15,79 @@ A contestant in a gameshow has a default of 90 seconds to make their way around 
 
 ## (a) asks:
 
-For each pair of items $i,j\in\{1,2,...,56\}$, compute the shortest time $d_ij$ to go from item $i$ to item $j$, and store these values. You may not use any optimization software to answer this question. Compute also the shortest time to travel between the start/end location and any item.
+For each pair of items $i,j\in[\![1,56]\!]$, compute the shortest time $d_{ij}$ to go from item $i$ to item $j$, and store these values. You may not use any optimization software to answer this question. Compute also the shortest time to travel between the start/end location and any item.
 
 ## (a) solution:
 
-```{r cars, echo = TRUE}
-summary(cars)
+```{r, eval=FALSE, echo=TRUE}
+# initialize an empty two-dimensional list
+d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
+# iterate through all item objects twice for all pairings
+for i in range(len(item_list)):
+    for j in range(len(item_list)):
+        item_i = item_list[i]
+        item_j = item_list[j]
+
+        # if item i and j share an aisle:
+        if item_i.x == item_j.x:
+            d[i][j] = abs(item_i.y - item_j.y) / 10
+        # if they don't share an aisle:
+        else:
+            dist_x = abs(item_i.x - item_j.x)
+            dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
+            d[i][j] = (dist_x + dist_y) / 10
+        # add 2 seconds to the time between items if the time is not already 0. this creates an extra
+        # two seconds for the contestant to pick up the item
+        if i!=j:
+            d[j][i]+=2
+            d[i][j] +=2
 ```
 
+```{r, eval=FALSE, echo=TRUE}
+d.append(d[0])
+for i in range(len(d[0])):
+    if i in [0, len(d[0])-1]:
+        d[i].append(d[i][0])
+    else:
+        d[i].append(d[i][0] - 2)
+```
+
+## (b) asks:
+
+Formulate the Supermarket Sweep problem as a Mixed-Integer Program.
+
+## (b) solution:
+
+
+
+
+
+## (c) asks:
+
+Code and solve your optimization model.  What is the optimal path?  Which items are picked?  What is the total value of these items?
+
+## (c) solution:
+
+
+
+## (d) asks:
+
+How does the optimal value of the problem vary with respect to the total amount of time allowed (initially set to 90 sec)?  Answer this question by plotting and analyzing the optimal value of the problem with different values of the total amount of time that is allowed.
+
+## (d) solution:
+
+
+
+
+## (e) asks:
+
+How does the optimal value of the problem vary with respect to the capacity of the cart (initially set to 15)?  Answer this question by plotting and analyzing the optimal value of the problem with different values of the cart capacity.
+
+## (e) solution:
+
+
+
+
+## (f) asks:
+
+Consider the initial parameters of the problem (cart of size 15, time allowed of 90 seconds). Gurobi  has  a  parameter  called  MIPGap. Its  default  value  is  0.0001. This  means that Gurobi will output a solution, as soon as its objective value is within 0.01% of the optimal value of the problem. Changing  this parameter will influence the time it takes Gurobi to output a solution.  What happens if you change this Gurobi parameter for the Supermarket Sweep  problem?   Answer  this  question  by  plotting  and  analyzing  the  time  Gurobi  takes  to output  a  solution  with  respect  to  the  optimality  gap  that  is  allowed.

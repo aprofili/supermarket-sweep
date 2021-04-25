@@ -39,7 +39,7 @@ for i in range(len(item_list)):
             d[j][i] = ((dist_x + dist_y) / 10)
         if i!=j:            #brynn
             d[j][i]+=2      #brynn
-            d[i][j] +=2     #brynn
+            d[i][j]+=2     #brynn
 
 #d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
 #for i in range(len(item_list)):
@@ -54,15 +54,17 @@ for i in range(len(item_list)):
 #            dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
 #            d[i][j] = (dist_x + dist_y) / 10
 
-d.append(d[0])                       #keep
+
 #for i in range(len(d[0])):         #adam
 #    d[i].append(d[i][0])           #adam
+
 d.append(d[0])
 for i in range(len(d[0])):
-    if i in [0, len(d[0])]:
+    if i in [0, len(d[0])-1]:
         d[i].append(d[i][0])
     else:
         d[i].append(d[i][0] - 2)
+
 
 #for i in range(len(d)):            #adam
 #    for j in range(len(d) - 1):    #adam
@@ -156,10 +158,10 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
 
 
-parts = "c"
+parts = "cf"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
-mip_gaps = range(5, 16)
+mip_gaps = range(1, 30)
 
 
 for part in parts:

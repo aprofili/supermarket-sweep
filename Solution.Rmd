@@ -11,13 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # a.
 
-We start first with a list of the nodes given in the Supermarket Sweep.csv file, each wrapped in a custom Item object that holds its x, y, and price attributes.
+We start first with a list of the nodes given in the Supermarket Sweep.csv file, each wrapped in an Item object that holds its x, y, and price attributes.
 
-If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates.
+If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates. We then divide the distance by the contestant's speed, 10 feet/second to convert this calculation to time.
 
-If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by computing both and using their minimum.
-
-We then divide the distance by the contestant's speed, 10 feet per second, to convert this distance to time.
+If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by taking the minimum of the two or by finding if the two item's y-values on average are closer to the end (110 ft) or the beginning (0 ft). We then divide the distance by the contestant's speed, 10 feet/second to convert this distance to time.
 
 Then two seconds is added to each time between nodes to account for the time it takes for a contestant to pick up the $j^\textrm{th}$ node.
 
@@ -162,7 +160,7 @@ Back to Start (0,0)
 
 The total value of the optimized cart is $143.85
 
-# d.
+## d.
 
 For this question, we were asked to observe the change in optimal value as we increased the time that the contestants are allowed to shop for. We see from the graph that the optimal value increases as we increase the allotted time that customers can shop for. This makes sense because customer will have more time to pick up the fifteen most expensive items instead of being limited by the time consraint. The fifteen most expensive item will give the optimal value of $154.85 which we can see is the optimal value starting at 110 seconds. We decided to plot every 5 seconds because the value were a little varied from the linear line which we expect because the prices of the items do not allow for the line to be linear and the values of the items in the cart are dependent on a binary decision: We can either include the item or not. As we see from the graphs, the optimal value is increasing steadily and then plateaus, indicating that the function of optimal value verses allotted seconds is a concave increasing function.
 ```{r, echo=FALSE}
@@ -171,7 +169,7 @@ times=50+(0:16)*5
 plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
 
-# e.
+## e.
 
 For this part of the problem we were asked to compare the changes in optimal value as we changed the maximum number of items allowed in the contestant's cart. We observed this change while keeping the time to complete the sweep constant, at 90 seconds. As shown in the graph, the optimal value of the items in the shopping cart increases until the capacity of the cart is 18. At this point, the optimal value of the items in the cart plateaus because the contestant does not have the time to go around the store and pick up all of the expensive items. It appears that the most money they can make during a 90 second interval is $148.82. The function of the optimal value on the number of items allowed in the cart is a concave increasing function. 
 
@@ -180,8 +178,7 @@ e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999
 capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
-
-# f.
+## f.
 
 For part f, we were asked to observe the change in runtime as we change the MIPGap parameter. This parameter helps determine when the optimizing function can terminate by giving a maximum relative percent difference in optimal values. As we changed this parameter while keeping the cart capacity and allotted time constant, we observe a decrease in the run time, measured in seconds. We decided to preform a log base 10 transformation of the MIPGap to show the data better on the graph. The graph shows that as we increase the MIPGap parameter, the time to solve the problem drastically decreases from a value consistently within the 45 to 50 second range all the way down to 1 second. We can see that the graph would continue to be between 0 and 1 as we increase the MIPGap. While this graph is neither concave or conex, it is a decreasing function, indicating that as we increase the MIPGap, the run time decreases. 
 

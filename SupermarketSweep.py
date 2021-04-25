@@ -69,7 +69,7 @@ pprint(np.array(d))
 
 from gurobipy import GRB, Model,quicksum
 
-def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
+def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
 
     m = Model('Supermarket Sweep')
 
@@ -141,24 +141,27 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
         for (i, j) in nodedict.items():
             time += d[i-1][j-1]
         print(f"\nTime used: {time} seconds\n\n\n")
-
+    if part == "f":
+        return m.Runtime
     return m.ObjVal
+    
 
 
 
-parts = "d"
-max_times = range(80, 101, 5)
+parts = "f"
+max_times = range(80, 101)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)
 
 
 for part in parts:
     if part == "c":
-        optimize(print_output=True)
+        optimize(print_output=True, part="c")
     if part == "d":
         d_results = []
         for max_time in max_times:
-            d_results.append(optimize(max_time=max_time))
+            d_results.append(optimize(max_time=max_time, part="d"))
+        print("\nD GRAPH")
         plt.plot([int(i) for i in max_times],d_results, marker='o')
         plt.xlabel("Number of seconds allotted to competitors (s)")
         plt.ylabel("Optimal value ($)")
@@ -168,7 +171,8 @@ for part in parts:
     if part == "e":
         e_results = []
         for cart_cap in cart_caps:
-            e_results.append(optimize(cart_cap=cart_cap))
+            e_results.append(optimize(cart_cap=cart_cap, part="e"))
+        print("\nE GRAPH")
         plt.plot([int(i) for i in cart_caps],e_results, marker='o')
         plt.xlabel("Maximum Number of Items Allowed In Cart")
         plt.ylabel("Optimal value ($)")
@@ -178,7 +182,8 @@ for part in parts:
     if part == "f":
         f_results = []
         for mip_gap in mip_gaps:
-            f_results.append(optimize(mip_gap=(mip_gap/10000)))
+            f_results.append(optimize(mip_gap=(mip_gap/10000), part="f"))
+        print("\nF GRAPH")
         plt.plot([int(i) for i in mip_gaps],f_results, marker='o')
         plt.xlabel("MIP Parameter in Optimization Problem")
         plt.ylabel("Optimal value ($)")

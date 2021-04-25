@@ -11,11 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # a.
 
-We start first with a list of the nodes given in the Supermarket Sweep.csv file, each wrapped in an Item object that holds its x, y, and price attributes.
+We start first with a list of the nodes given in the Supermarket Sweep.csv file, each wrapped in a custom Item object that holds its x, y, and price attributes.
 
-If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates. We then divide the distance by the contestant's speed, 10 feet/second to convert this calculation to time.
+If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates.
 
-If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by taking the minimum of the two or by finding if the two item's y-values on average are closer to the end (110 ft) or the beginning (0 ft). We then divide the distance by the contestant's speed, 10 feet/second to convert this distance to time.
+If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by computing both and using their minimum.
+
+We then divide the distance by the contestant's speed, 10 feet per second, to convert this distance to time.
 
 Then two seconds is added to each time between nodes to account for the time it takes for a contestant to pick up the $j^\textrm{th}$ node.
 

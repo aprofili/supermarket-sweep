@@ -33,7 +33,7 @@ for i in range(len(item_list)):
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = (dist_x + dist_y) / 10
-        # add 2 seconds to the time bewteen items if the time is not already 0. this creates an extra
+        # add 2 seconds to the time between items if the time is not already 0. this creates an extra
         # two seconds for the contestant to pick up the item
         if i!=j:
             d[j][i]+=2
@@ -43,7 +43,7 @@ for i in range(len(item_list)):
 
 (10)&&y_{n+1}&\le T \\ \\
 ```
-Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. We must subtract two seconds from this time because the matrix values compute the time it takes to go from node i to node j plus the time spent at node j, 2 seconds. Since this is a value of time, it should stay non-negative so we have added a maxmimum function.
+Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. We must subtract two seconds from this time because the matrix values compute the time it takes to go from node i to node j plus the time spent at node j, 2 seconds. Since this is a value of time, it should stay non-negative so we have added a maximum function.
 ```{r, eval=FALSE}
 d.append(d[0])
 for i in range(len(d[0])):
@@ -106,6 +106,13 @@ $$
 
 (7) Each running time $y_j$ is set as the sum over all $i$ of $t_ij$ for all destination nodes $j$, of which at most one is nonzero.
 
+(8) We define the sum over destination nodes $k$ of $t_jk$ as the sum of the running total at node $j$ plus the additional time added by the chosen destination.
+
+(9) No node may follow itself in the path.
+
+(10) Nodes that are not entered may not be exited, and nodes that are entered must be exited.
+
+(11) The amount of item nodes in the path must be less than $C$.
 
 
 # d.

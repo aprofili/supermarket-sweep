@@ -63,17 +63,17 @@ $T$ represents the maximum time the contestant is given to shop.
 
 $C$ represents the maximum amount of items the contestant can put in their cart.
 
-$v_{i}$ represents the value of node $i$. $\forall i = 1, 2, ..., n$
+$v_{i}$ represents the value of node $i$. $\forall i \in [\![1, n]\!]$
 
-$d_{ij}$ represents the minimum time it takes to move from node $i$ to node $j$. If node $j$ represents an item and not a start/end point, it will include the 2 seconds to add that item to the cart. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
+$d_{ij}$ represents the minimum time it takes to move from node $i$ to node $j$. If node $j$ represents an item and not a start/end point, it will include the 2 seconds to add that item to the cart. $\forall i = 1, 2, ..., n$ $\forall j \in [\![2, n+1]\!]$
 
 ## Decision Variables:
 
-$x_{ij} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
+$x_{ij} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i \in [\![1, n]\!]$ $\forall j \in [\![2, n+1]\!]$
 
-$y_{j} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall j = 1, 2, ..., n+1$
+$y_{j}$ represents the running time to follow the path from the start until node $j$. $\forall j \in [\![1, n+1]\!]$
 
-$t_{ij} = y_{j}$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
+$t_{ij} = y_{j}$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i \in [\![1, n]\!]$ $\forall j \in [\![2, n+1]\!]$
 
 $$
 \begin{aligned}

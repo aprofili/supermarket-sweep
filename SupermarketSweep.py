@@ -37,9 +37,9 @@ for i in range(len(item_list)):
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = ((dist_x + dist_y) / 10)
             d[j][i] = ((dist_x + dist_y) / 10)
-        if i!=j:
-            d[j][i]+=2
-            d[i][j] +=2
+        if i!=j:            #brynn
+            d[j][i]+=2      #brynn
+            d[i][j] +=2     #brynn
 
 #d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
 #for i in range(len(item_list)):
@@ -54,14 +54,17 @@ for i in range(len(item_list)):
 #            dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
 #            d[i][j] = (dist_x + dist_y) / 10
 
-d.append(d[0])
-for i in range(len(d[0])):
-    d[i].append(max(d[i][0]-2,0))
-# pprint(np.array(d))
+d.append(d[0])                       #keep
+#for i in range(len(d[0])):         #adam
+#    d[i].append(d[i][0])           #adam
+for i in range(len(d[0])):          #brynn
+    d[i].append(max(d[i][0]-2,0))   #brynn
 
-#for i in range(len(d)):
-#    for j in range(len(d) - 1):
-#        d[i][j] = d[i][j] + 2
+#for i in range(len(d)):            #adam
+#    for j in range(len(d) - 1):    #adam
+#       d[i][j] = d[i][j] + 2       #adam
+        
+pprint(np.array(d))
 #nd=len(d)
 #nd0=len(d[0])
 #maxd= max([d[i][j] for i in range(nd) for j in range(nd0)])
@@ -94,7 +97,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
     m.addConstrs(t[i,j]<=max_time*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # if node i doesn't go to node j, then t[i, j] is 0
     m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # y[j] is equal to the only positive t[i, j]
     m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([(d[j-1][k-1])*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the ith node plus the time from the ith to jth node
-    m.addConstr(y[n+1]<=max_time) # total time less than 90 seconds
+    #m.addConstr(y[n+1]<=max_time) # total time less than 90 seconds
     m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+1)])<= cart_cap) #at most 15 items in the cart (not including the end node)
     # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last
     # m.addConstrs(y[n+1] >= y[i] for i in range(1, n+1)) #node n+1 must come last
@@ -148,7 +151,8 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
 
 
-parts = "d"
+
+parts = "c"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)

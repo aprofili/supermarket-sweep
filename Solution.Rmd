@@ -11,8 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # a.
 
-If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates.
-If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by taking the minimum of the two or by finding if the two item's y-values on average are closer to the end (110 ft) or the beginning (0 ft).
+If two items are on the same x-aisle, the shortest distance from one to the other is the absolute value of the difference between their y-coordinates. We then divide the distance by the contestant's speed, 10 feet/second to convert this calculation to time.
+If two items are on different x-aisle, the shortest distance from one to the other is either by moving up to the end of the aisle, across to the other item's aisle, and then down to the item, or by moving down to the start of the aisle, across to the other item's aisle, and then up to the item. An algorithm should choose the shortest of these two options, which could be done by taking the minimum of the two or by finding if the two item's y-values on average are closer to the end (110 ft) or the beginning (0 ft). We then divide the distance by the contestant's speed, 10 feet/second to convert this calculation to time.
+Then two seconds is added to each time between nodes to account for the time it takes for a contestant to pick up the jth node.
 
 We implemented this in a short nested loop in Python below:
 ```{r, eval=FALSE}
@@ -32,12 +33,21 @@ for i in range(len(item_list)):
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = (dist_x + dist_y) / 10
+        # add 2 seconds to the time bewteen items if the time is not already 0. this creates an extra
+        # two seconds for the contestant to pick up the item
+        if i!=j:
+            d[j][i]+=2
+            d[i][j] +=2
+
+
+
+(10)&&y_{n+1}&\le T \\ \\
 ```
-Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown.
+Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. We must subtract two seconds from this time because the matrix values compute the time it takes to go from node i to node j plus the time spent at node j, 2 seconds. Since this is a value of time, it should stay non-negative so we have added a maxmimum function.
 ```{r, eval=FALSE}
 d.append(d[0])
 for i in range(len(d[0])):
-    d[i].append(d[i][0])
+    d[i].append(max(d[i][0]-2,0))
 ```
 
 
@@ -95,4 +105,13 @@ $$
 (6) If the direct path from node $i$ to node $j$ exists, than $t_ij$ is upper bounded at $T$. Otherwise, it is constrained to equal 0.
 
 (7) Each running time $y_j$ is set as the sum over all $i$ of $t_ij$ for all destination nodes $j$, of which at most one is nonzero.
+
+
+
+# d.
+
+```{r}
+d_results = c(135.64999999999998, 136.64999999999998, 136.85, 136.85, 138.14999999999998, 138.64999999999998, 139.85, 142.35, 143.64999999999998, 143.64999999999998, 143.85, 144.04999999999998, 144.35, 145.64999999999998, 148.64999999999998, 148.64999999999998, 148.85, 149.64999999999998, 150.35, 150.35, 151.64999999999998)
+
+```
 

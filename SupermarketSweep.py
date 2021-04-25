@@ -98,7 +98,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
     m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+2)])<= cart_cap + 1) #at most 15 items in the cart (not including the end node)
     # m.addConstr(quicksum([x[n+1, j] for i in range(1, n+1)]) == 0) # node n+1 must come last
     # m.addConstrs(y[n+1] >= y[i] for i in range(1, n+1)) #node n+1 must come last
-    m.addConstrs(quicksum([x[i,j] for j in range(2,n+2)])== quicksum([x[k,i] for k in range(1,n+1)]) for i in range(2,n+1))
+    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])== quicksum([x[j,k] for k in range(2,n+2)]) for j in range(2,n+1)) # nodes that arent arrived at are also not departed from
 
     # m.setObjective(y[n+1],GRB.MINIMIZE) # minimize time to the last node
     # m.setObjective(quicksum([quicksum([d[i-1][j-1] * x[i, j] for j in range(2, n+2)]) for i in range(1, n+1)]),GRB.MINIMIZE) # same as previous
@@ -146,7 +146,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
 
 
 
-parts = "d"
+parts = "c"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)

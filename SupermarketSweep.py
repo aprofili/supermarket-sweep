@@ -146,7 +146,7 @@ def optimize(max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False):
 
 
 
-parts = "c"
+parts = "d"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)
@@ -169,12 +169,20 @@ for part in parts:
         e_results = []
         for cart_cap in cart_caps:
             e_results.append(optimize(cart_cap=cart_cap))
+        plt.plot([int(i) for i in cart_caps],e_results, marker='o')
+        plt.xlabel("Maximum Number of Items Allowed In Cart")
+        plt.ylabel("Optimal value ($)")
+        plt.show()
         print("e results")
         print(e_results)
     if part == "f":
         f_results = []
         for mip_gap in mip_gaps:
             f_results.append(optimize(mip_gap=(mip_gap/10000)))
+        plt.plot([int(i) for i in mip_gaps],f_results, marker='o')
+        plt.xlabel("MIP Parameter in Optimization Problem")
+        plt.ylabel("Optimal value ($)")
+        plt.show()
         print("f results")
         print(f_results)
 

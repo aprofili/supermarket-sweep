@@ -51,8 +51,13 @@ for i in range(len(d[0])):
 
 # b.
 Data Placeholders:
+
 $x_{ij} = 1$ if item $j$ follows item $i$ in the chosen path, 0 otherwise.
+
 $y_{j} = 1$ if item $j$ follows item $i$ in the chosen path, 0 otherwise.
+
+$t_{ij} = y_{j}$ if item $j$ follows item $i$ in the chosen path, 0 otherwise.
+
 $$
 \begin{aligned}
 &&\max_{x, y, t} \sum_{i=1}^nv_i\sum_{j=2}^{n+1}x_{ij} \\ \\

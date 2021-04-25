@@ -57,7 +57,7 @@ for i in range(len(item_list)):
 d.append(d[0])
 for i in range(len(d[0])):
     d[i].append(max(d[i][0]-2,0))
-pprint(np.array(d))
+# pprint(np.array(d))
 
 #for i in range(len(d)):
 #    for j in range(len(d) - 1):
@@ -148,8 +148,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
 
 
-
-parts = "c"
+parts = "d"
 max_times = range(80, 101, 5)
 cart_caps = range(5, 26)
 mip_gaps = range(5, 16)

@@ -179,6 +179,8 @@ plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In
 
 # f.
 
+We changed the values of the MIPGap, a parameter that helps determine when the optimizer can terminate by giving a maximum relative percent difference in optimal values. As we changed this parameter while keeping the cart capacity and allotted time constant, we observe a decrease in the runtime, measured in seconds. We decided to preform a log base 10 trasnformation of the MIPGap to show the data better on the graph. The graph shows that as we increase the MIPGap parameter, the time to solve the probelm drasticlly decreases from a value consistently in the 45  to 50 second range all the way down to 1 second.
+
 ```{r, echo=FALSE}
 f_results=c(55.552918910980225,51.73050308227539,49.226829051971436,48.2147171497345,46.99422883987427,40.8342010974884,35.21365284919739,7.805516004562378,0.9036610126495361,0.8991899490356445,0.8945901393890381)
 mipgaps=c(10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0)

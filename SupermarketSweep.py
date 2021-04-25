@@ -58,17 +58,17 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
     y=m.addVars(range(1,n+2), vtype=GRB.CONTINUOUS, name='y') #seconds from start to item i during sweep
     t=m.addVars(range(1,n+1), range(2,n+2), vtype=GRB.CONTINUOUS, name='t',lb=0) # seconds from start to item j if node j comes after node i
 
-    m.addConstr(y[1]==0) # starts with node 1  and time 0
-    m.addConstrs(x[i,i]==0 for i in range(2,n+1)) # nodes cannot connect to themselves
-    m.addConstr(quicksum([x[1, j] for j in range(2, n+2)]) == 1) # node 1 must be visited
-    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])<=1 for j in range(2,n+2)) # all nodes follow 0 or 1 node
-    m.addConstrs(quicksum([x[i,j] for j in range(2,n+2)])<=1 for i in range(1,n+1)) # all nodes are followed by 0 or 1 node
-    m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # node n+1 must be visited
-    m.addConstrs(t[i,j]<=max_time*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # if node i doesn't go to node j, then t[i, j] is 0
-    m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # y[j] is equal to the only positive t[i, j]
-    m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([(d[j-1][k-1])*x[j,k] for k in range(2,n+2) ]) for j in range(1,n+1)) # defines t[i, j] to be the time up to the ith node plus the time from the ith to jth node
-    m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+1)])<= cart_cap) #at most 15 items in the cart (not including the end node)
-    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])== quicksum([x[j,k] for k in range(2,n+2)]) for j in range(2,n+1)) # nodes that arent arrived at are also not departed from
+    m.addConstr(y[1]==0) # (1) starts with node 1  and time 0
+    m.addConstr(quicksum([x[1, j] for j in range(2, n+2)]) == 1) # (2) node 1 must be visited
+    m.addConstrs(quicksum([x[i,j] for j in range(2,n+2)])<=1 for i in range(1,n+1)) # (3) all nodes are followed by 0 or 1 node
+    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])<=1 for j in range(2,n+2)) # (4) all nodes follow 0 or 1 node
+    m.addConstr(quicksum([x[i, n+1] for i in range(1, n+1)]) == 1) # (5) node n+1 must be visited
+    m.addConstrs(t[i,j]<=max_time*x[i,j] for i in range(1,n+1) for j in range(2,n+2)) # (6) if node i doesn't go to node j, then t[i, j] is 0
+    m.addConstrs(y[j]==quicksum([t[i,j] for i in range(1,n+1)]) for j in range(2,n+2)) # (7) y[j] is equal to the only positive t[i, j]
+    m.addConstrs(quicksum([t[j,k] for k in range(2,n+2)])==y[j]+quicksum([(d[j-1][k-1])*x[j,k] for k in range(2,n+2)]) for j in range(1,n+1)) # (8) defines t[i, j] to be the time up to the ith node plus the time from the ith to jth node
+    m.addConstrs(x[i,i]==0 for i in range(2,n+1)) # (9)  nodes cannot connect to themselves
+    m.addConstrs(quicksum([x[i,j] for i in range(1,n+1)])== quicksum([x[j,k] for k in range(2,n+2)]) for j in range(2,n+1)) # (10) nodes that arent arrived at are also not departed from
+    m.addConstr(quicksum([quicksum([x[i,j] for i in range(1,n+1)]) for j in range(2,n+1)])<= cart_cap) # (11) at most 15 items in the cart (not including the end node)
 
     m.setObjective(quicksum([v[i-1]*quicksum([x[i,j] for j in range(2,n+2)]) for i in range(1,n+1)]), GRB.MAXIMIZE) # maximize cost of items collected
 
@@ -106,7 +106,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
         return m.Runtime
     return m.ObjVal
 
-parts = "cdef"
+parts = "cdef" #to run part c, d, e, or f from the project questions, insert the resective letter
 max_times = range(50, 131, 5)
 cart_caps = range(5, 26)
 mip_gaps = [10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0]

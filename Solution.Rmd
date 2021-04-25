@@ -114,22 +114,44 @@ $$
 
 (11) The amount of item nodes in the path must be less than $C$.
 
+# c.
+Path Taken:
+Node 1: Start Node (0,0)
+Node 2: Coffee Beans: $6.99 at (0,15)
+Node 3: K-Cups: $10.99 at (0,35)
+Node 6: Granola: $5.49 at (0,100)
+Node 26: Shampoo: $8.99 at (40,100)
+Node 31: Trash Bags: $8.99 at (50,95)
+Node 36: Air Freshner: $6.99 at (60,75)
+Node 35: Dog Treats: $3.99 at (60,65)
+Node 34: Broom: $13.99 at (60,35)
+Node 33: Detergent: $12.99 at (60,20)
+Node 40: Redbull (4): $7.99 at (70,30)
+Node 39: Gatorade (12): $6.99 at (70,35)
+Node 28: Paper Towels: $9.99 at (50,25)
+Node 27: Toilet Paper: $7.99 at (50,15)
+Node 22: Ibuprofen: $5.49 at (40,20)
+Node 23: Diapers: $25.99 at (40,35)
+Back to Start (0,0)
 
+The total value of the optimized cart is $143.85
 # d.
 
-```{r,echo=FALSE}
+```{r, echo=FALSE}
 d_results = c(135.64999999999998, 136.64999999999998, 136.85, 136.85, 138.14999999999998, 138.64999999999998, 139.85, 142.35, 143.64999999999998, 143.64999999999998, 143.85, 144.04999999999998, 144.35, 145.64999999999998, 148.64999999999998, 148.64999999999998, 148.85, 149.64999999999998, 150.35, 150.35, 151.64999999999998)
 times=c(80:100)
-plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (s)", ylab="Optimal value ($)", type='o')
+plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
+# e.
 ```{r, echo=FALSE}
 e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999998, 118.89999999999998, 125.88999999999997, 132.87999999999997, 138.36999999999998, 140.05999999999997, 143.85, 147.64, 147.82999999999998, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82)
 capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
-```{r}
+# f.
+```{r, echo=FALSE}
 f_results=c(48.907296895980835, 48.149569034576416, 50.7875018119812, 47.497539043426514, 48.54376697540283, 46.827709913253784, 47.3807110786438, 46.99515891075134, 47.16296696662903, 50.65434694290161, 53.655133962631226)
 mipgaps=c(5:15)
-plot(mipgaps, f_results, col="purple", xlab="MIP Gaps", ylab="Optimal value ($)", type='o')
+plot(mipgaps, f_results, col="purple", xlab="MIP Gaps", ylab="Runtime (seconds)", type='o')
 ```
 

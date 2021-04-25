@@ -1,0 +1,33 @@
+---
+title: "Supermarket Sweep"
+author: "Adam Profili, Brynn Schneberger"
+date: "4/25/2021"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## (a) asks:
+
+For each pair of items $i,j\in\{1,2,...,56\}$, compute the shortest time $d_ij$ to go from item $i$ to item $j$, and store these values. You may not use any optimization software to answer this question. Compute also the shortest time to travel between the start/end location and any item.
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+

@@ -11,7 +11,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Project Overview
 
-A contestant in a gameshow has a default of 90 seconds to make their way around a grocery store, collect up to a default of 15 items in their cart, and return to the start. Their score is the total cost of the items in their cart. Items are spread around the following aisles, and each have specific prices and locations.
+<font size="9"> A contestant in a gameshow has a default of 90 seconds to make their way around a grocery store, collect up to a default of 15 items in their cart, and return to the start. Their score is the total cost of the items in their cart. Items are spread around the following aisles, and each have specific prices and locations.</font>
+
+![Grocery Store Layout](map.png){height=180}
 
 ## (a) asks:
 
@@ -19,47 +21,69 @@ For each pair of items $i,j\in[\![1,56]\!]$, compute the shortest time $d_{ij}$ 
 
 ## (a) solution:
 
-```{r, eval=FALSE, echo=TRUE}
-# initialize an empty two-dimensional list
-d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
-# iterate through all item objects twice for all pairings
-for i in range(len(item_list)):
-    for j in range(len(item_list)):
-        item_i = item_list[i]
-        item_j = item_list[j]
 
-        # if item i and j share an aisle:
-        if item_i.x == item_j.x:
-            d[i][j] = abs(item_i.y - item_j.y) / 10
-        # if they don't share an aisle:
-        else:
-            dist_x = abs(item_i.x - item_j.x)
-            dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
-            d[i][j] = (dist_x + dist_y) / 10
-        # add 2 seconds to the time between items if the time is not already 0. this creates an extra
-        # two seconds for the contestant to pick up the item
-        if i!=j:
-            d[j][i]+=2
-            d[i][j] +=2
-```
 
-```{r, eval=FALSE, echo=TRUE}
-d.append(d[0])
-for i in range(len(d[0])):
-    if i in [0, len(d[0])-1]:
-        d[i].append(d[i][0])
-    else:
-        d[i].append(d[i][0] - 2)
-```
+
+
+
 
 ## (b) asks:
 
 Formulate the Supermarket Sweep problem as a Mixed-Integer Program.
 
-## (b) solution:
+## (b) Data Placeholders:
+
+$n$ represents the number of nodes, with node 1 being the start node, nodes 2,3,...,n being item nodes, and n+1 being the end node which shares the attributes of the start node.
+
+$T$ represents the maximum time the contestant is given to shop.
+
+$C$ represents the maximum amount of items the contestant can put in their cart.
+
+$v_{i}$ represents the value of node $i$. $\forall i = 1, 2, ..., n$
+
+$d_{ij}$ represents the minimum time it takes to move from node $i$ to node $j$. If node $j$ represents an item and not a start/end point, it will include the 2 seconds to add that item to the cart. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
 
 
+## (b) Decision Variables:
 
+$x_{ij} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
+
+$y_{j} = 1$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall j = 1, 2, ..., n+1$
+
+$t_{ij} = y_{j}$ if node $j$ follows node $i$ in the chosen path, 0 otherwise. $\forall i = 1, 2, ..., n$ $\forall j = 2, 3, ..., n+1$
+
+## (b) Objective:
+
+$$
+\begin{aligned}
+&\max_{x, y, t} &\textrm{score}&=\sum_{i=1}^nv_i\sum_{j=2}^{n+1}x_{ij}
+\end{aligned}
+$$
+
+## (b) Constraint (1)
+
+$$
+\begin{aligned}
+y_1 &= 0 \\ \\
+\end{aligned}
+$$
+
+
+## (b) Constraint (2)
+
+$$
+\begin{aligned}
+\sum_{j=2}^{n+1}x_{1,j}&=1
+\end{aligned}
+$$
+
+## (b) Constraint (3)
+
+$$
+\begin{aligned}
+\sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i=2, 3, ..., n
+\end{aligned}
+$$
 
 
 ## (c) asks:
@@ -67,6 +91,44 @@ Formulate the Supermarket Sweep problem as a Mixed-Integer Program.
 Code and solve your optimization model.  What is the optimal path?  Which items are picked?  What is the total value of these items?
 
 ## (c) solution:
+
+
+Path Taken:
+
+Node 1: Start Node (0,0)
+
+Node 2: Coffee Beans: $6.99 at (0,15)
+
+Node 3: K-Cups: $10.99 at (0,35)
+
+Node 6: Granola: $5.49 at (0,100)
+
+Node 26: Shampoo: $8.99 at (40,100)
+
+Node 31: Trash Bags: $8.99 at (50,95)
+
+Node 36: Air Freshner: $6.99 at (60,75)
+
+Node 35: Dog Treats: $3.99 at (60,65)
+
+Node 34: Broom: $13.99 at (60,35)
+
+Node 33: Detergent: $12.99 at (60,20)
+
+Node 40: Redbull (4): $7.99 at (70,30)
+
+Node 39: Gatorade (12): $6.99 at (70,35)
+
+Node 28: Paper Towels: $9.99 at (50,25)
+
+Node 27: Toilet Paper: $7.99 at (50,15)
+
+Node 22: Ibuprofen: $5.49 at (40,20)
+
+Node 23: Diapers: $25.99 at (40,35)
+
+Back to Start (0,0)
+
 
 
 
@@ -79,11 +141,16 @@ How does the optimal value of the problem vary with respect to the total amount 
 
 
 
+
+
 ## (e) asks:
 
 How does the optimal value of the problem vary with respect to the capacity of the cart (initially set to 15)?  Answer this question by plotting and analyzing the optimal value of the problem with different values of the cart capacity.
 
 ## (e) solution:
+
+
+
 
 
 

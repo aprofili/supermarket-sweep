@@ -25,22 +25,24 @@ We implemented this in a short nested loop in Python below:
 d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
 # iterate through all item objects twice for all pairings
 for i in range(len(item_list)):
-    for j in range(len(item_list)):
+    for j in range(i,len(item_list)):
         item_i = item_list[i]
         item_j = item_list[j]
 
         # if item i and j share an aisle:
         if item_i.x == item_j.x:
-            d[i][j] = abs(item_i.y - item_j.y) / 10
+            d[i][j] = (abs(item_i.y - item_j.y) / 10)
+            d[j][i] = (abs(item_i.y - item_j.y) / 10)
         # if they don't share an aisle:
         else:
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
-            d[i][j] = (dist_x + dist_y) / 10
-        # add the extra time to pick up node j 
+            d[i][j] = ((dist_x + dist_y) / 10)
+            d[j][i] = ((dist_x + dist_y) / 10)
+         # add the extra time to pick up node j 
         if i!=j:
-            d[j][i]+=2
-            d[i][j] +=2
+            d[j][i]+=2  
+            d[i][j]+=2 
 ```
 Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. If we previously added 2 to one of these entries, we want to remove it since the last node does not represent an item that needs time for collecting.
 ```{r, eval=FALSE}

@@ -122,7 +122,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
         return m.Runtime
     return m.ObjVal
 
-parts = "cdef" # to run part c, d, e, or f from the project questions, insert the resective letter
+parts = "cdef" #  to run part c, d, e, or f from the project questions, insert the resective letter
 max_times = range(50, 131, 5)
 cart_caps = range(5, 26)
 mip_gaps = [10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0]

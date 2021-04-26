@@ -43,6 +43,7 @@ for i in range(len(item_list)):
             d[j][i] = ((dist_x + dist_y) / 10)
 ```
 
+\newpage
 
 # b.
 
@@ -129,7 +130,7 @@ $$
 
 (10) Nodes that are not entered may not be exited, and nodes that are entered must be exited.
 
-(11) The amount of item nodes in the path must be less than $C$.
+(11) The amount of item nodes in the path must be at most $C$.
 
 # c.
 
@@ -171,6 +172,8 @@ Back to Start (0,0)
 
 The total value of the optimized cart is $143.85
 
+\newpage
+
 # d.
 
 We see from the graph that the optimal value increases as we increase the allotted time that contestant can shop for. This makes sense because the contestant will have more time to pick up the fifteen most expensive items instead of being limited by choosing nearby items. The fifteen most expensive items will give the optimal value of $154.85 which we can see starting at 110 seconds, which shows where additional time is no longer helpful to the contestant. As we increase the allotted time by 5 second increments, we see that the function increases slower and slower until it stops, signifying a concave increasing relationship.
@@ -178,8 +181,10 @@ We see from the graph that the optimal value increases as we increase the allott
 ```{r, echo=FALSE}
 d_results = c(86.42, 94.41999999999999, 101.69999999999999, 112.67999999999999, 119.67999999999996, 128.66999999999996, 135.64999999999998, 138.64999999999998, 143.85, 148.64999999999998, 151.64999999999998, 153.85, 154.85, 154.85, 154.85, 154.85, 154.85)
 times=50+(0:16)*5
-plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
+plot(times, d_results, col="dark green", xlab="Time allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
+
+\newpage
 
 # e.
 
@@ -190,6 +195,8 @@ e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999
 capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
+
+\newpage
 
 # f.
 

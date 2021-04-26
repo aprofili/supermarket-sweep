@@ -30,6 +30,7 @@ We then divide the distance by the contestant's speed, 10 feet/second to convert
 
 ## (a) solution:
 
+Refer to the code
 
 ## (b) asks:
 
@@ -64,6 +65,8 @@ $$
 \end{aligned}
 $$
 
+Maximize the value of all items picked up.
+
 ## (b) Constraint (1)
 
 $$
@@ -71,6 +74,8 @@ $$
 y_1 &= 0 \\ \\
 \end{aligned}
 $$
+
+(1) The path begins at node 1 with a time of 0.
 
 
 ## (b) Constraint (2)
@@ -81,6 +86,9 @@ $$
 \end{aligned}
 $$
 
+
+(2) Node 1 has exactly one destination node directly after it in the path.
+
 ## (b) Constraint (3)
 
 $$
@@ -88,6 +96,8 @@ $$
 \sum_{j=2}^{n+1}x_{ij}&\le1 &\forall i \in [\![2, n]\!]
 \end{aligned}
 $$
+
+(3) Nodes 2 through $n$ may have at most one destination node directly after it in the path.
 
 ## (b) Constraint (4)
 
@@ -97,13 +107,20 @@ $$
 \end{aligned}
 $$
 
-## (b) Constraint (3)
+
+(4) Nodes 2 through $n$ may have at most one origin node directly before it in the path.
+
+
+## (b) Constraint (5)
 
 $$
 \begin{aligned}
 \sum_{i=1}^{n}x_{ij}&\le1 &\forall j \in [\![2, n]\!]
 \end{aligned}
 $$
+
+
+(4) Nodes 2 through $n$ may have at most one origin node directly before it in the path.
 
 ## (b) Constraint (5)
 
@@ -113,6 +130,8 @@ $$
 \end{aligned}
 $$
 
+(5) Node n+1 has exactly one origin node directly before it in the path.
+
 ## (b) Constraint (6)
 
 $$
@@ -120,6 +139,8 @@ $$
 t_{ij}&\le T x_{ij} &\forall i \in [\![1, n]\!] \ \ \ \ \ \ &\forall j \in [\![2, n+1]\!]
 \end{aligned}
 $$
+
+(6) If the direct path from node $i$ to node $j$ exists, than $t_ij$ is upper bounded at $T$. Otherwise, it is constrained to equal 0.
 
 ## (b) Constraint (7)
 
@@ -129,6 +150,8 @@ y_j &= \sum_{i=1}^n t_{ij} &\forall j \in [\![2, n+1]\!]
 \end{aligned}
 $$
 
+(7) Each running time $y_j$ is set as the sum over all $i$ of $t_ij$ for all destination nodes $j$, of which at most one is nonzero.
+
 ## (b) Constraint (8)
 
 $$
@@ -136,6 +159,8 @@ $$
 \sum_{k=2}^{n+1} t_{jk} &= y_j + \sum_{k=2}^{n+1} d_{jk}x_{jk} &\forall j \in [\![1, n]\!]
 \end{aligned}
 $$
+
+(8) We define the sum over destination nodes $k$ of $t_jk$ as the sum of the running total at node $j$ plus the additional time added by the chosen destination.
 
 ## (b) Constraint (9)
 
@@ -145,6 +170,8 @@ x_{ii} &= 0 &\forall i \in [\![1, n]\!]
 \end{aligned}
 $$
 
+(9) No node may follow itself in the path.
+
 ## (b) Constraint (10)
 
 $$
@@ -153,6 +180,8 @@ $$
 \end{aligned}
 $$
 
+(10) Nodes that are not entered may not be exited, and nodes that are entered must be exited.
+
 ## (b) Constraint (11)
 
 $$
@@ -160,6 +189,9 @@ $$
 \sum_{i=1}^n\sum_{j=2}^{n}x_{ij} &\le C
 \end{aligned}
 $$
+
+
+(11) The amount of item nodes in the path must be at most $C$.
 
 ## (b) Bound Constraints
 
@@ -189,10 +221,8 @@ How does the optimal value of the problem vary with respect to the total amount 
 ```{r, echo=FALSE}
 d_results = c(86.42, 94.41999999999999, 101.69999999999999, 112.67999999999999, 119.67999999999996, 128.66999999999996, 135.64999999999998, 138.64999999999998, 143.85, 148.64999999999998, 151.64999999999998, 153.85, 154.85, 154.85, 154.85, 154.85, 154.85)
 times=50+(0:16)*5
-plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
+plot(times, d_results, col="dark green", xlab="Time allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
-
-## (d) solution:
 
 ## (e) asks:
 
@@ -205,9 +235,6 @@ e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999
 capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
-
-## (e) solution:
-
 
 ## (f) asks:
 
@@ -222,6 +249,7 @@ mipgaps=c(10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**
 plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIPGap)", ylab="Runtime (seconds)", type='o')
 ```
 
-## (f) solution:
+## Conclusion
 
+Thank you for listening to our presentation.
 

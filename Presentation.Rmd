@@ -186,10 +186,13 @@ How does the optimal value of the problem vary with respect to the total amount 
 
 ## (d) solution:
 
+```{r, echo=FALSE}
+d_results = c(86.42, 94.41999999999999, 101.69999999999999, 112.67999999999999, 119.67999999999996, 128.66999999999996, 135.64999999999998, 138.64999999999998, 143.85, 148.64999999999998, 151.64999999999998, 153.85, 154.85, 154.85, 154.85, 154.85, 154.85)
+times=50+(0:16)*5
+plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
+```
 
-
-
-
+## (d) solution:
 
 ## (e) asks:
 
@@ -197,10 +200,13 @@ How does the optimal value of the problem vary with respect to the capacity of t
 
 ## (e) solution:
 
+```{r, echo=FALSE}
+e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999998, 118.89999999999998, 125.88999999999997, 132.87999999999997, 138.36999999999998, 140.05999999999997, 143.85, 147.64, 147.82999999999998, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82, 148.82)
+capacities=c(5:25)
+plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
+```
 
-
-
-
+## (e) solution:
 
 
 ## (f) asks:
@@ -208,3 +214,14 @@ How does the optimal value of the problem vary with respect to the capacity of t
 Consider the initial parameters of the problem (cart of size 15, time allowed of 90 seconds). Gurobi  has  a  parameter  called  MIPGap. Its  default  value  is  0.0001. This  means that Gurobi will output a solution, as soon as its objective value is within 0.01% of the optimal value of the problem. Changing  this parameter will influence the time it takes Gurobi to output a solution.  What happens if you change this Gurobi parameter for the Supermarket Sweep  problem?   Answer  this  question  by  plotting  and  analyzing  the  time  Gurobi  takes  to output  a  solution  with  respect  to  the  optimality  gap  that  is  allowed.
 
 ## (f) solution:
+
+```{r, echo=FALSE}
+f_results=c(55.552918910980225,51.73050308227539,49.226829051971436,48.2147171497345,46.99422883987427,40.8342010974884,35.21365284919739,7.805516004562378,0.9036610126495361,0.8991899490356445,0.8945901393890381)
+mipgaps=c(10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0)
+#mipgaps2=c(-4,)
+plot(log(mipgaps,base=10), f_results, col="purple", xlab="log(MIPGap)", ylab="Runtime (seconds)", type='o')
+```
+
+## (f) solution:
+
+

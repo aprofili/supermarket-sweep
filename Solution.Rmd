@@ -39,24 +39,33 @@ for i in range(len(item_list)):
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = ((dist_x + dist_y) / 10)
             d[j][i] = ((dist_x + dist_y) / 10)
-         # add the extra time to pick up node j 
+```
+
+
+# b.
+
+For the sake of our formulation, we altered the $d_{ij}$ matrix conceptually to include pickup time when necessary. The below addition to our previous loop accounts for this:
+
+```{r, eval=FALSE}
         if i!=j:
             d[j][i]+=2  
             d[i][j]+=2 
 ```
-Then, since the end node we create later doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. If we previously added 2 to one of these entries, we want to remove it since the last node does not represent an item that needs time for collecting.
+Then, since the end node we use in our formulation doesn't have an entry in the list of items, we duplicate the first row and column of the matrix to the last row and column since the end node is the same as the start node, which exists as the first item in the item list shown. If we previously added 2 to one of these entries, we want to remove it since the last node does not represent an item that needs time for collecting.
 ```{r, eval=FALSE}
+# copy the first column to the end
 d.append(d[0])
+# for each column, copy the first row to the end
 for i in range(len(d[0])):
+    # check if we didn't already add the 2 seconds
     if i in [0, len(d[0])-1]:
         d[i].append(d[i][0])
+    # if we did, remove it
     else:
         d[i].append(d[i][0] - 2)
 ```
 
 
-
-# b.
 ## Data Placeholders:
 
 $n$ represents the number of nodes, with node 1 being the start node, nodes 2,3,...,n being item nodes, and n+1 being the end node which shares the attributes of the start node.
@@ -179,6 +188,7 @@ e_results=c(73.95, 83.94, 92.92999999999999, 101.91999999999999, 110.90999999999
 capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
+
 ## f.
 
 The MIPGap parameter helps determine when the optimizing function can terminate by giving a minimum relative percent difference from the true optimal value. As we changed this parameter- keeping the cart capacity and allotted time constant- we observe a decrease in the runtime, measured here in seconds. We decided to alter our MIPGap inputs using a log transformation of base 10 to better highlight these multiplicative increments which showed the best results. The graph shows that as we increase the MIPGap parameter, the time to solve the problem drastically decreases from a value consistently within the 45 to 50 second range all the way down to 1 second. On a log scale, we see first a concave and then a convex decreasing function, which highlights an important area of a MIPGap around $10^{-1.7}$ where there is a significant dropoff in runtime before finding a suitable optimal solution.

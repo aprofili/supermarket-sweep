@@ -2,6 +2,7 @@
 import csv
 import matplotlib.pyplot as plt
 
+# Item class to wrap each entry from the given item list
 class Item:
     def __init__(self, name, price, x, y):
         self.name = name
@@ -12,35 +13,46 @@ class Item:
     def __repr__(self):
         return f"{self.name}: ${self.price} at ({self.x},{self.y})"
 
+# iterate through the non-header rows of the data table
 item_list = []
 with open("Supermarket Sweep.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)
+    # create a list of Item objects from each row in the file
     for row in reader:
         item_list.append(Item(row[0], row[1], row[2], row[3]))
 
+# initialize an empty two-dimensional list to represent time between items
 d = [[0 for i in range(len(item_list))] for i in range(len(item_list))]
+# iterate through all item objects twice for all pairings
 for i in range(len(item_list)):
     for j in range(i,len(item_list)):
         item_i = item_list[i]
         item_j = item_list[j]
 
+        # if item i and j share an aisle:
         if item_i.x == item_j.x:
             d[i][j] = (abs(item_i.y - item_j.y) / 10)
             d[j][i] = (abs(item_i.y - item_j.y) / 10)
+        # if they don't share an aisle:
         else:
             dist_x = abs(item_i.x - item_j.x)
             dist_y = min(((110 - item_i.y) + (110 - item_j.y) ), item_i.y + item_j.y)
             d[i][j] = ((dist_x + dist_y) / 10)
             d[j][i] = ((dist_x + dist_y) / 10)
+        # add the extra time to pick up node j
         if i!=j:
-            d[j][i]+=2  
-            d[i][j]+=2 
+            d[j][i]+=2
+            d[i][j]+=2
 
+# copy the first column to the end
 d.append(d[0])
+# for each column, copy the first row to the end
 for i in range(len(d[0])):
+    # check if we didn't already add the 2 seconds
     if i in [0, len(d[0])-1]:
         d[i].append(d[i][0])
+    # if we did, remove it
     else:
         d[i].append(d[i][0] - 2)
 
@@ -79,6 +91,7 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
 
     m.optimize()
 
+    # from the optimal solution, determine which nodes lead where
     nodedict={}
     count = 0
     for i in range(1,n+1):
@@ -87,26 +100,29 @@ def optimize(part, max_time=90, cart_cap=15, mip_gap=0.0001, print_output=False)
                 count +=1
                 nodedict[i]=j
 
+    # print results
     if print_output:
         print(f"\n\n\nMoney Won: ${m.ObjVal}\n")
         print("Path Taken:")
         i = 1
-        winnings = 0
+        # follow the node dictionary to determine the path
         for rep in range(count):
-            winnings += item_list[i-1].price
             print(f"Node {i}: {item_list[i-1]}")
             i = nodedict[i]
         print("Back to Start (0,0)\nFinished")
 
+        # determine the time for the route
         time = 0
         for (i, j) in nodedict.items():
             time += d[i-1][j-1]
         print(f"\nTime used: {time} seconds\n\n\n")
+
+
     if part == "f":
         return m.Runtime
     return m.ObjVal
 
-parts = "cdef" #to run part c, d, e, or f from the project questions, insert the resective letter
+parts = "cdef" # to run part c, d, e, or f from the project questions, insert the resective letter
 max_times = range(50, 131, 5)
 cart_caps = range(5, 26)
 mip_gaps = [10**-5,10**-4,10**-3,5*10**-3,10**-2,10**-(5/3),10**-(4/3),10**-1,10**-(2/3),10**-(1/3),10**0]

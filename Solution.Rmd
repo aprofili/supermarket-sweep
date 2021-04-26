@@ -169,7 +169,7 @@ Back to Start (0,0)
 
 The total value of the optimized cart is $143.85
 
-## d.
+# d.
 
 We see from the graph that the optimal value increases as we increase the allotted time that contestant can shop for. This makes sense because the contestant will have more time to pick up the fifteen most expensive items instead of being limited by choosing nearby items. The fifteen most expensive items will give the optimal value of $154.85 which we can see starting at 110 seconds, which shows where additional time is no longer helpful to the contestant. As we increase the allotted time by 5 second increments, we see that the function increases slower and slower until it stops, signifying a concave increasing relationship.
 
@@ -179,7 +179,7 @@ times=50+(0:16)*5
 plot(times, d_results, col="dark green", xlab="Number of seconds allotted to competitors (seconds)", ylab="Optimal value ($)", type='o')
 ```
 
-## e.
+# e.
 
 As shown in the graph, the optimal price of the items collected increases as the number of items allowed increases until the capacity of the cart is 18. At this point, the optimal value of the items in the cart plateaus because the contestant does not have the time to go around the store and pick up any more items without sacrificing more expensive ones. It appears that the most money they can make during a 90 second interval is $148.82, reached with a cart capacity of 18 items. Similarly to the last graph, we see a concave increasing relationship, with more significant benefits to the earlier increases in cart capacity.
 
@@ -189,7 +189,7 @@ capacities=c(5:25)
 plot(capacities, e_results, col="blue", xlab="Maximum Number of Items Allowed In Cart", ylab="Optimal value ($)", type='o')
 ```
 
-## f.
+# f.
 
 The MIPGap parameter helps determine when the optimizing function can terminate by giving a minimum relative percent difference from the true optimal value. As we changed this parameter- keeping the cart capacity and allotted time constant- we observe a decrease in the runtime, measured here in seconds. We decided to alter our MIPGap inputs using a log transformation of base 10 to better highlight these multiplicative increments which showed the best results. The graph shows that as we increase the MIPGap parameter, the time to solve the problem drastically decreases from a value consistently within the 45 to 50 second range all the way down to 1 second. On a log scale, we see first a concave and then a convex decreasing function, which highlights an important area of a MIPGap around $10^{-1.7}$ where there is a significant dropoff in runtime before finding a suitable optimal solution.
 
